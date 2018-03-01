@@ -179,4 +179,8 @@ venv.bak/
 # kyungook add
 /_doc
 _doc/
+.idea
+.vscode
 
+## File-based project format:
+*.gz

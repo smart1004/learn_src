@@ -175,3 +175,8 @@ venv.bak/
 
 
 # End of https://www.gitignore.io/api/python,pycharm,visualstudiocode
+
+# kyungook add
+/_doc
+_doc/
+

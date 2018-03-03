@@ -3,18 +3,19 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 import numpy as np
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
 
 def mnist_1():
       mnist = input_data.read_data_sets('mnist')
 
-      print(mnist.train.images.shape,
-            mnist.train.labels.shape)
-      print(mnist.test.images.shape,
-            mnist.test.labels.shape)
-      print(type(mnist.train.labels))     # <class 'numpy.ndarray'>
-      print(mnist.train.labels.dtype)     # uint8
+      # print(mnist.train.images.shape, mnist.train.labels.shape)
+      # (55000, 784)     (55000,)
+      # print(mnist.test.images.shape,  mnist.test.labels.shape)
+      # print(type(mnist.train.labels))     # <class 'numpy.ndarray'>
+      # print(mnist.train.labels.dtype)     # uint8
 
-      target_train = np.int32(mnist.train.labels)
+      target_train = np.int32(mnist.train.labels) # 왜 이렇게 한 거니? $$$$$$$$$$$$$$$$$$$
       print(target_train.dtype)
 
       # 문제
@@ -32,7 +33,7 @@ def mnist_1():
       cost = tf.reduce_mean(cost_i)
       train = tf.train.GradientDescentOptimizer(0.01).minimize(cost)
 
-      sess = tf.Session()
+      sess = tf.Session(config=config)
       sess.run(tf.global_variables_initializer())
 
       for i in range(1000):
@@ -50,57 +51,61 @@ def mnist_1():
 
       sess.close()
 
+def mnist_2():
+      # mnist = input_data.read_data_sets('mnist', one_hot=True)
+      mnist = input_data.read_data_sets('mnist')
 
-# mnist = input_data.read_data_sets('mnist', one_hot=True)
-mnist = input_data.read_data_sets('mnist')
+      # print(mnist.train.images.shape,
+      #       mnist.train.labels.shape)
+      # print(mnist.test.images.shape,
+      #       mnist.test.labels.shape)
+      # print(type(mnist.train.labels))     # <class 'numpy.ndarray'>
+      # print(mnist.train.labels.dtype)     # uint8
 
-print(mnist.train.images.shape,
-      mnist.train.labels.shape)
-print(mnist.test.images.shape,
-      mnist.test.labels.shape)
-print(type(mnist.train.labels))     # <class 'numpy.ndarray'>
-print(mnist.train.labels.dtype)     # uint8
+      # target_train = np.int32(mnist.train.labels)
+      # print(target_train.dtype)
 
-# target_train = np.int32(mnist.train.labels)
-# print(target_train.dtype)
+      # 문제
+      # mnist 데이터셋을 소프트맥스로 학습시키고 결과도 예측해보세요.
+      x = tf.placeholder(tf.float32)
+      y = tf.placeholder(tf.int32)
 
-# 문제
-# mnist 데이터셋을 소프트맥스로 학습시키고 결과도 예측해보세요.
-x = tf.placeholder(tf.float32)
-y = tf.placeholder(tf.int32)
+      w = tf.Variable(tf.zeros([784, 10]))
+      b = tf.Variable(tf.zeros([10]))
 
-w = tf.Variable(tf.zeros([784, 10]))
-b = tf.Variable(tf.zeros([10]))
+      # (100, 10) = (100, 784) x (784, 10)
+      model = tf.matmul(x, w) + b  #z --> model
+      hypothesis = tf.nn.softmax(z)
+      cost_i = tf.nn.sparse_softmax_cross_entropy_with_logits(
+            labels=y, logits=z)
+      cost = tf.reduce_mean(cost_i)
+      train = tf.train.GradientDescentOptimizer(0.01).minimize(cost)
 
-# (100, 10) = (100, 784) x (784, 10)
-z = tf.matmul(x, w) + b
-hypothesis = tf.nn.softmax(z)
-cost_i = tf.nn.sparse_softmax_cross_entropy_with_logits(
-      labels=y, logits=z)
-cost = tf.reduce_mean(cost_i)
-train = tf.train.GradientDescentOptimizer(0.01).minimize(cost)
+      sess = tf.Session()
+      sess.run(tf.global_variables_initializer())
 
-sess = tf.Session()
-sess.run(tf.global_variables_initializer())
+      epochs, batch_size = 10, 100
+      count = mnist.train.num_examples // batch_size
+      print('count :', count)
+      for i in range(epochs):
+            for _ in range(count):
+                  x_batch, y_batch = mnist.train.next_batch(batch_size)
+                  # y_batch = np.asarray(y_batch, dtype=np.int32)
+                  y_batch = np.int32(y_batch)
+                  sess.run(train, feed_dict={x: x_batch,
+                                          y: y_batch})
 
-epochs, batch_size = 10, 100
-count = mnist.train.num_examples // batch_size
-print('count :', count)
-for i in range(epochs):
-    for _ in range(count):
-        x_batch, y_batch = mnist.train.next_batch(batch_size)
-        # y_batch = np.asarray(y_batch, dtype=np.int32)
-        y_batch = np.int32(y_batch)
-        sess.run(train, feed_dict={x: x_batch,
-                                   y: y_batch})
+      target_test = np.int32(mnist.test.labels)
 
-target_test = np.int32(mnist.test.labels)
+      prediction = tf.equal(tf.argmax(hypothesis, 1), target_test)
+      accuracy = tf.reduce_mean(tf.cast(prediction, tf.float32))
+      print(sess.run(accuracy,
+                  feed_dict={x: mnist.test.images,
+                              y: target_test}))
 
-prediction = tf.equal(tf.argmax(hypothesis, 1), target_test)
-accuracy = tf.reduce_mean(tf.cast(prediction, tf.float32))
-print(sess.run(accuracy,
-               feed_dict={x: mnist.test.images,
-                          y: target_test}))
+      sess.close()
 
-sess.close()
 
+
+mnist_1()
+# mnist_2()

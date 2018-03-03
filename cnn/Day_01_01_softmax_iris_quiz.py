@@ -10,44 +10,44 @@ config.gpu_options.allow_growth = True
 
 def softmax_1():
     iris = datasets.load_iris()
-    # print(iris)
-    # print(iris.keys())
+    print(iris)
+    print(iris.keys())
     # dict_keys(['data', 'target', 'target_names', 'DESCR', 'feature_names'])
-    # print(iris['data'])
-    # print(iris['target'])
+    print(iris['data'])
+    print(iris['target'])
 
     onehot = preprocessing.LabelBinarizer().fit_transform(iris['target'])
     # print(onehot)
 
     data = model_selection.train_test_split(iris['data'],
                                             onehot)
-    # print(type(data), len(data))
+    print(type(data), len(data))
     # <class 'list'> 4
 
     x_train, x_test, y_train, y_test = data
-    # print(x_train.shape, x_test.shape)
-    # print(y_train.shape, y_test.shape)
+    print(x_train.shape, x_test.shape)
+    print(y_train.shape, y_test.shape)
     # (112, 4) (38, 4)
     # (112, 3) (38, 3)
 
     x = tf.placeholder(tf.float32)
 
-    w = tf.Variable(tf.zeros([4, 3]))  #[4, 3] 4<--feature가 4개 y가 속성이 3개, onehot
-    b = tf.Variable(tf.zeros([3])) # y가 속성이 3개, onehot
+    w = tf.Variable(tf.zeros([4, 3]))
+    b = tf.Variable(tf.zeros([3]))
 
-    # (112, 3) = (112, 4) x (4, 3)
-    model = tf.matmul(x, w) + b
-    hypothesis = tf.nn.softmax(model)
+    # (?, ?) = (112, 4) x (4, 3)
+    z = tf.matmul(x, w) + b
+    hypothesis = tf.nn.softmax(z)
     cost_i = tf.nn.softmax_cross_entropy_with_logits(labels=y_train,
-                                                     logits=model)
+                                                     logits=z)
     cost = tf.reduce_mean(cost_i)
-    opt_op = tf.train.GradientDescentOptimizer(0.01).minimize(cost)
+    train = tf.train.GradientDescentOptimizer(0.01).minimize(cost)
 
     sess = tf.Session(config=config)   # sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
     for i in range(1000):
-        sess.run(opt_op, feed_dict={x: x_train})
+        sess.run(train, feed_dict={x: x_train})
 
         if i % 20 == 0:
             print(i, sess.run(cost, feed_dict={x: x_train}))
@@ -66,8 +66,8 @@ def softmax_2():
     data = model_selection.train_test_split(iris['data'],
                                             iris.target)
     x_train, x_test, y_train, y_test = data
-    # print(x_train.shape, x_test.shape)
-    # print(y_train.shape, y_test.shape)
+    print(x_train.shape, x_test.shape)
+    print(y_train.shape, y_test.shape)
     # (112, 4) (38, 4)
     # (112,) (38,)
 
@@ -76,27 +76,26 @@ def softmax_2():
     w = tf.Variable(tf.zeros([4, 3]))
     b = tf.Variable(tf.zeros([3]))
 
-    # (112, 3) = (112, 4) x (4, 3)
-    model = tf.matmul(x, w) + b
-    hypothesis = tf.nn.softmax(model)
+    # (?, ?) = (112, 4) x (4, 3)
+    z = tf.matmul(x, w) + b
+    hypothesis = tf.nn.softmax(z)
     cost_i = tf.nn.sparse_softmax_cross_entropy_with_logits(
-        labels=y_train, logits=model)
+        labels=y_train, logits=z)
     cost = tf.reduce_mean(cost_i)
-    opt_op = tf.train.GradientDescentOptimizer(0.01).minimize(cost)
+    train = tf.train.GradientDescentOptimizer(0.01).minimize(cost)
 
-    sess = tf.Session(config=config)
+    sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
     for i in range(1000):
-        sess.run(opt_op, feed_dict={x: x_train})
+        sess.run(train, feed_dict={x: x_train})
 
         if i % 20 == 0:
             print(i, sess.run(cost, feed_dict={x: x_train}))
 
-    # y_hat = sess.run(hypothesis,
-    #                  feed_dict={x: x_test})
-    # print(y_hat.shape)
-    # (38, 3)
+    y_hat = sess.run(hypothesis,
+                     feed_dict={x: x_test})
+    # print(y_hat)
 
     # 에러.
     # prediction = tf.equal(hypothesis, y_test)
@@ -107,5 +106,5 @@ def softmax_2():
     sess.close()
 
 
-#softmax_1()
-softmax_2()
+softmax_1()
+# softmax_2()

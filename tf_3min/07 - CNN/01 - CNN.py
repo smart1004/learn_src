@@ -3,7 +3,8 @@ import tensorflow as tf
 
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("./mnist/data/", one_hot=True)
-
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
 #########
 # 신경망 모델 구성
 ######
@@ -57,7 +58,7 @@ optimizer = tf.train.AdamOptimizer(0.001).minimize(cost)
 # 신경망 모델 학습
 ######
 init = tf.global_variables_initializer()
-sess = tf.Session()
+sess = tf.Session(config=config)
 sess.run(init)
 
 batch_size = 100

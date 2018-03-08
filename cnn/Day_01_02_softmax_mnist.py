@@ -6,6 +6,9 @@ import numpy as np
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+
 def mnist_1():
       mnist = input_data.read_data_sets('mnist')
 
@@ -16,7 +19,8 @@ def mnist_1():
       # print(mnist.train.labels.dtype)     # uint8
 
       target_train = np.int32(mnist.train.labels) # 왜 이렇게 한 거니? $$$$$$$$$$$$$$$$$$$
-      print(target_train.dtype)
+      # print(target_train.dtype) #int32
+      # print(mnist.train.labels.dtype) #uint8
 
       # 문제
       # mnist 데이터셋을 소프트맥스로 학습시키고 결과도 예측해보세요.
@@ -26,10 +30,10 @@ def mnist_1():
       b = tf.Variable(tf.zeros([10]))
 
       # (55000, 10) = (55000, 784) x (784, 10)
-      z = tf.matmul(x, w) + b
-      hypothesis = tf.nn.softmax(z)
+      model = tf.matmul(x, w) + b
+      hypothesis = tf.nn.softmax(model)
       cost_i = tf.nn.sparse_softmax_cross_entropy_with_logits(
-            labels=target_train, logits=z)
+            labels=target_train, logits=model)
       cost = tf.reduce_mean(cost_i)
       train = tf.train.GradientDescentOptimizer(0.01).minimize(cost)
 

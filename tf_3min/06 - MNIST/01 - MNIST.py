@@ -1,6 +1,9 @@
 # 머신러닝 학습의 Hello World 와 같은 MNIST(손글씨 숫자 인식) 문제를 신경망으로 풀어봅니다.
 import tensorflow as tf
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+
 from tensorflow.examples.tutorials.mnist import input_data
 # 텐서플로우에 기본 내장된 mnist 모듈을 이용하여 데이터를 로드합니다.
 # 지정한 폴더에 MNIST 데이터가 없는 경우 자동으로 데이터를 다운로드합니다.
@@ -11,7 +14,7 @@ mnist = input_data.read_data_sets("./mnist/data/", one_hot=True)
 # 신경망 모델 구성
 ######
 # 입력 값의 차원은 [배치크기, 특성값] 으로 되어 있습니다.
-# 손글씨 이미지는 28x28 픽셀로 이루어져 있고, 이를 784개의 특성값으로 정합니다.
+# 손글씨 이미지는 28x28 픽셀로 이루어져 있고, 이를 784개의 특성값 존재
 X = tf.placeholder(tf.float32, [None, 784])
 # 결과는 0~9 의 10 가지 분류를 가집니다.
 Y = tf.placeholder(tf.float32, [None, 10])
@@ -39,19 +42,20 @@ optimizer = tf.train.AdamOptimizer(0.001).minimize(cost)
 # 신경망 모델 학습
 ######
 init = tf.global_variables_initializer()
-sess = tf.Session()
+sess = tf.Session(config=config)   # sess = tf.Session()
 sess.run(init)
 
-batch_size = 100
-total_batch = int(mnist.train.num_examples / batch_size)
-
-for epoch in range(15):
+mini_batch_size = 100
+total_batch = int(mnist.train.num_examples / mini_batch_size)
+epoch_count = 15  # 전체 데이터에 대한 학습을 15회 실시
+for epoch in range(epoch_count):
     total_cost = 0
 
-    for i in range(total_batch):
+    for i in range(total_batch):  # 미니배치의 총개수 만큼 반복 학습
         # 텐서플로우의 mnist 모델의 next_batch 함수를 이용해
         # 지정한 크기만큼 학습할 데이터를 가져옵니다.
-        batch_xs, batch_ys = mnist.train.next_batch(batch_size)
+        # batch_xs --> 이미지, batch_ys --> y라벨
+        batch_xs, batch_ys = mnist.train.next_batch(mini_batch_size)
 
         _, cost_val = sess.run([optimizer, cost], feed_dict={X: batch_xs, Y: batch_ys})
         total_cost += cost_val

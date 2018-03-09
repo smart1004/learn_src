@@ -96,17 +96,26 @@ def softmax_2():
 # 행렬 곱셈에서 w와 x의 위치를 바꾸세요.
 def softmax_3_1():
     xxy = np.loadtxt('Data/softmax.txt', dtype=np.float32, unpack=True)
+    ''' unpack=True
     print(xxy)
+    [[1. 1. 1. 1. 1. 1. 1. 1.]
+     [2. 3. 3. 5. 7. 2. 6. 7.]
+     [1. 2. 4. 5. 5. 5. 6. 7.]
+     [0. 0. 0. 0. 0. 0. 1. 1.]
+     [0. 0. 0. 1. 1. 1. 0. 0.]
+     [1. 1. 1. 0. 0. 0. 0. 0.]]    
+    '''
 
-    xx = xxy[:3]
-    y = xxy[3:]
-    print(xx.shape, y.shape)
+    xx = xxy[:3]  # <-- xxy[:, :3]
+    y  = xxy[3:]   # <-- xxy[:, 3:]
+
+    print(xx.shape, y.shape) # (3, 8) (3, 8)
 
     x = tf.placeholder(tf.float32)
     w = tf.Variable(tf.zeros([3, 3]))
 
-    # (3, 8) = (3, 3) x (3, 8)
-    z = tf.matmul(w, x)
+    # (3, 8) =   (3, 3) x (3, 8)
+    z = tf.matmul(w,       x)
 
     # (3, 8)
     hypothesis = tf.nn.softmax(z, axis=0)
@@ -118,7 +127,7 @@ def softmax_3_1():
     cost_i = tf.reduce_sum(cross_entropy, axis=0)
     # cost_i = tf.nn.softmax_cross_entropy_with_logits(logits=z, labels=y)
 
-    # scalar = mean(8,)
+    # scalar <--  shape = ()
     cost = tf.reduce_mean(cost_i)
 
     train = tf.train.GradientDescentOptimizer(0.1).minimize(cost)
@@ -179,3 +188,5 @@ def softmax_3_1():
 
 
     print('\n\n\n\n\n\n')
+
+softmax_3_1()

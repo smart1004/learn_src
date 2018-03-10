@@ -25,19 +25,19 @@ X = tf.placeholder(tf.float32, [None, n_input])
 # 인코더 레이어와 디코더 레이어의 가중치와 편향 변수를 설정합니다.
 # 다음과 같이 이어지는 레이어를 구성하기 위한 값들 입니다.
 # input -> encode -> decode -> output
-W_encode = tf.Variable(tf.random_normal([n_input, n_hidden]))
-b_encode = tf.Variable(tf.random_normal([n_hidden]))
+W_encode = tf.Variable(tf.random_normal([n_input, n_hidden])) # (n_input, n_hidden)=(28*28=784, 256)
+b_encode = tf.Variable(tf.random_normal([n_hidden]))   # n_hidden =256
 # sigmoid 함수를 이용해 신경망 레이어를 구성합니다.
 # sigmoid(X * W + b)
-# 인코더 레이어 구성
+# 인코더 레이어 구성, encoder 의 shape = (?, 256)
 encoder = tf.nn.sigmoid(
                 tf.add(tf.matmul(X, W_encode), b_encode))
 
 # encode 의 아웃풋 크기를 입력값보다 작은 크기로 만들어 정보를 압축하여 특성을 뽑아내고,
 # decode 의 출력을 입력값과 동일한 크기를 갖도록하여 입력과 똑같은 아웃풋을 만들어 내도록 합니다.
 # 히든 레이어의 구성과 특성치을 뽑아내는 알고리즘을 변경하여 다양한 오토인코더를 만들 수 있습니다.
-W_decode = tf.Variable(tf.random_normal([n_hidden, n_input]))
-b_decode = tf.Variable(tf.random_normal([n_input]))
+W_decode = tf.Variable(tf.random_normal([n_hidden, n_input])) # (n_hidden, n_input)=(256, 28*28=784)
+b_decode = tf.Variable(tf.random_normal([n_input]))           # n_input = 28*28=784
 # 디코더 레이어 구성
 # 이 디코더가 최종 모델이 됩니다.
 decoder = tf.nn.sigmoid(
@@ -45,6 +45,7 @@ decoder = tf.nn.sigmoid(
 
 # 디코더는 인풋과 최대한 같은 결과를 내야 하므로, 디코딩한 결과를 평가하기 위해
 # 입력 값인 X 값을 평가를 위한 실측 결과 값으로하여 decoder 와의 차이를 손실값으로 설정합니다.
+# tf.pow : Computes the power  ex: tf.pow(2,3)  2의 3승을 구한다 = 8
 cost = tf.reduce_mean(tf.pow(X - decoder, 2))
 optimizer = tf.train.RMSPropOptimizer(learning_rate).minimize(cost)
 

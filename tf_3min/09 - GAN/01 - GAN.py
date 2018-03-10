@@ -1,5 +1,6 @@
 # 2016년에 가장 관심을 많이 받았던 비감독(Unsupervised) 학습 방법인
 # Generative Adversarial Network(GAN)을 구현해봅니다.
+#
 # https://arxiv.org/abs/1406.2661
 import tensorflow as tf
 import matplotlib.pyplot as plt
@@ -17,7 +18,7 @@ learning_rate = 0.0002
 # 신경망 레이어 구성 옵션
 n_hidden = 256
 n_input = 28 * 28
-n_noise = 128  # 생성기의 입력값으로 사용할 노이즈의 크기
+N_NOISE = 128  # 생성기의 입력값으로 사용할 노이즈의 크기
 
 #########
 # 신경망 모델 구성
@@ -25,15 +26,16 @@ n_noise = 128  # 생성기의 입력값으로 사용할 노이즈의 크기
 # GAN 도 Unsupervised 학습이므로 Autoencoder 처럼 Y 를 사용하지 않습니다.
 X = tf.placeholder(tf.float32, [None, n_input])
 # 노이즈 Z를 입력값으로 사용합니다.
-Z = tf.placeholder(tf.float32, [None, n_noise])
+Z = tf.placeholder(tf.float32, [None, N_NOISE])
 
-# 생성기 신경망에 사용하는 변수들입니다.
-G_W1 = tf.Variable(tf.random_normal([n_noise, n_hidden], stddev=0.01))
+# 생성기 신경망에 사용하는 변수들입니다. #N_NOISE, n_hidden = 128, 256
+G_W1 = tf.Variable(tf.random_normal([N_NOISE, n_hidden], stddev=0.01))
 G_b1 = tf.Variable(tf.zeros([n_hidden]))
+#                                   n_hidden, n_input = 256, 784(28*28)
 G_W2 = tf.Variable(tf.random_normal([n_hidden, n_input], stddev=0.01))
 G_b2 = tf.Variable(tf.zeros([n_input]))
 
-# 판별기 신경망에 사용하는 변수들입니다.
+# 판별기 신경망에 사용하는 변수들입니다. #n_input, n_hidden = 784(28*28), 256
 D_W1 = tf.Variable(tf.random_normal([n_input, n_hidden], stddev=0.01))
 D_b1 = tf.Variable(tf.zeros([n_hidden]))
 # 판별기의 최종 결과값은 얼마나 진짜와 가깝냐를 판단하는 한 개의 스칼라값입니다.
@@ -47,7 +49,6 @@ def generator(noise_z):
                     tf.matmul(noise_z, G_W1) + G_b1)
     output = tf.nn.sigmoid(
                     tf.matmul(hidden, G_W2) + G_b2)
-
     return output
 
 
@@ -57,13 +58,17 @@ def discriminator(inputs):
                     tf.matmul(inputs, D_W1) + D_b1)
     output = tf.nn.sigmoid(
                     tf.matmul(hidden, D_W2) + D_b2)
-
     return output
 
 
-# 랜덤한 노이즈(Z)를 만듭니다.
-def get_noise(batch_size, n_noise):
-    return np.random.normal(size=(batch_size, n_noise))
+# 랜덤한 노이즈(Z)를 만듭니다. batch_size, N_NOISE = 100, 128  N_NOISE: 글로벌 변수로 지정되어 있음
+# 왜 128개인가? generator의 인풋 x의 개수를 128개로 정했다. 보통 128, 256 등으로 세팅
+def get_noise(batch_size, N_NOISE):
+    rs = np.random.normal(size=(batch_size, N_NOISE))  # ndarray 를 리턴,
+    # print('-'*50)
+    # print('get_noise> np.random.normal:', rs)
+    # print('='*60)
+    return rs
 
 
 # 노이즈를 이용해 랜덤한 이미지를 생성합니다.
@@ -112,7 +117,7 @@ loss_val_D, loss_val_G = 0, 0
 for epoch in range(total_epoch):
     for i in range(total_batch):
         batch_xs, batch_ys = mnist.train.next_batch(batch_size)
-        noise = get_noise(batch_size, n_noise)
+        noise = get_noise(batch_size, N_NOISE)
 
         # 판별기와 생성기 신경망을 각각 학습시킵니다.
         _, loss_val_D = sess.run([train_D, loss_D],
@@ -129,7 +134,7 @@ for epoch in range(total_epoch):
     ######
     if epoch == 0 or (epoch + 1) % 10 == 0:
         sample_size = 10
-        noise = get_noise(sample_size, n_noise)
+        noise = get_noise(sample_size, N_NOISE)
         samples = sess.run(G, feed_dict={Z: noise})
 
         fig, ax = plt.subplots(1, sample_size, figsize=(sample_size, 1))

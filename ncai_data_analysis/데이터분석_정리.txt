@@ -1,0 +1,18 @@
+cross validation 등을 해두면 딥러닝 시 효과가 좋음
+scikit-learn : 머신러닝 라이브러리, 
+sklearn : scikit-learn을 쉽게 사용하기 위한 인터페이스 
+빨간교제는 pandas의 용, 앞쪽의 내용을 풀어서 강의로 진행
+numpy를 제대로 해야 tensorflow를 잘 이해 할 수 있다.
+fast campus : 향후 강의 매체, 깊이 있게 배울 수 있음.
+http://mpld3.github.io/examples/index.html#example-gallery : mpld3 사용
+
+아래에서 원하는 이미지를 찾아서 데이터를 넣으면 된다. 
+http://mpld3.github.io/examples/scatter_tooltip.html
+
+https://seaborn.pydata.org/examples/index.html
+
+https://matplotlib.org/gallery/index.html#
+
+
+인덱스 배열이 잘 이해가 안된다.
+

@@ -1,8 +1,7 @@
 # 신경망 구성을 손쉽게 해 주는 유틸리티 모음인 tensorflow.layers 를 사용해봅니다.
 # 01 - CNN.py 를 재구성한 것이니, 소스를 한 번 비교해보세요.
 # 이처럼 TensorFlow 에는 간단하게 사용할 수 있는 다양한 함수와 유틸리티들이 매우 많이 마련되어 있습니다.
-# 다만, 처음에는 기본적인 개념에 익숙히지는 것이 좋으므로 이후에도 가급적 기본 함수들을 이용하도록 하겠습니다.
-import tensorflow as tf
+# 다만, 처음에는 기본적인 개념에 익숙히지는 것이 좋으므 
 
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("./mnist/data/", one_hot=True)

@@ -1,4 +1,5 @@
 # Day_03_06_auto_encoder.py
+# 유사한 사례 : D:\home\tf_3min\08 - Autoencoder\01 - Autoencoder.py
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt

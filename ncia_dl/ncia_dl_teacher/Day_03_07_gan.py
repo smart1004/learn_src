@@ -1,5 +1,7 @@
 # Day_03_07_gan.py
 # gan : Generative Adversarial Nets
+# 유사한 사례 : D:\home\tf_3min\09 - GAN\01 - GAN.py
+
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
@@ -66,8 +68,9 @@ train_D = opt_D.minimize(-loss_D, var_list=[D_w1, D_b1, D_w2, D_b2])
 train_G = opt_G.minimize(-loss_G, var_list=[G_w1, G_b1, G_w2, G_b2])
 
 # ---------------------------- #
-
-sess = tf.Session()
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)   # sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 epochs, batch_size = 30, 128

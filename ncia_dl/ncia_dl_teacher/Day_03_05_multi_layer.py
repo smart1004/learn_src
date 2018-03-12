@@ -3,16 +3,12 @@ import tensorflow as tf
 import random
 from tensorflow.examples.tutorials.mnist import input_data
 
-
 def show_accuracy(hypothesis, sess, x, y, keep_rate, prompt, dataset):
     pred = tf.equal(tf.argmax(hypothesis, axis=1),
                     tf.argmax(y, axis=1))
     accuracy = tf.reduce_mean(tf.cast(pred, tf.float32))
-
-    print(prompt, sess.run(accuracy, {x: dataset.images,
-                                      y: dataset.labels,
-                                      keep_rate: 1.0}))
-
+    # print('-' * 50, 'show_accuracy')
+    print(prompt, sess.run(accuracy, {x: dataset.images, y: dataset.labels, keep_rate: 1.0}))
 
 def softmax(x, y, keep_rate=None):
     # 784 : feature
@@ -122,7 +118,6 @@ def multi_layer_dropout(x, y, keep_rate=None):
 
     return z, cost
 
-
 def show_model(model):
     mnist = input_data.read_data_sets('mnist', one_hot=True)
 
@@ -131,9 +126,7 @@ def show_model(model):
     keep_rate = tf.placeholder(tf.float32)
 
     # ---------------------------------- #
-
     hypothesis, cost = model(x, y, keep_rate)
-
     # ---------------------------------- #
 
     # optimizer = tf.train.GradientDescentOptimizer(0.01)
@@ -146,34 +139,30 @@ def show_model(model):
 
     epochs, batch_size = 15, 128
 
-    loops = mnist.train.num_examples // batch_size
-    print('loops :', loops)
+    loops = mnist.train.num_examples // batch_size  # mnist.train.num_examples=55000,  batch_size=128
+    # print('loops :', loops)  #loops:  429
 
     for i in range(epochs):
         total = 0
         for _ in range(loops):
             xx, yy = mnist.train.next_batch(batch_size)
 
-            _, loss = sess.run([train, cost], feed_dict={x: xx,
-                                                         y: yy,
-                                                         keep_rate: 0.7})
+            _, loss = sess.run([train, cost], feed_dict={x: xx, y: yy, keep_rate: 0.7})
             total += loss
 
         print('{:2} : {}'.format(i, total / loops))
 
     # --------------------------------- #
-
     show_accuracy(hypothesis, sess, x, y, keep_rate, 'train :', mnist.train)
     show_accuracy(hypothesis, sess, x, y, keep_rate, 'valid :', mnist.validation)
     show_accuracy(hypothesis, sess, x, y, keep_rate, 'test  :', mnist.test)
-
     sess.close()
 
 
-# show_model(softmax)
-# show_model(multi_layer_relu)
+show_model(softmax)
+show_model(multi_layer_relu)
 # show_model(multi_layer_xavier)
-show_model(multi_layer_dropout)
+# show_model(multi_layer_dropout)
 
 # [1] softmax
 # train : 0.8978364

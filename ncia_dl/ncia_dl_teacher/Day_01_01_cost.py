@@ -6,7 +6,6 @@ import numpy as np
 # ctrl + shift + f10
 # shift + f10
 
-
 def cost(x, y, w):
     c = 0
     for i in range(len(x)):
@@ -15,7 +14,6 @@ def cost(x, y, w):
         c += e
     return c / len(x)
 
-
 def gradient_descent(x, y, w):
     c = 0
     for i in range(len(x)):
@@ -23,7 +21,6 @@ def gradient_descent(x, y, w):
         e = (hx - y[i]) * x[i]
         c += e
     return c / len(x)
-
 
 def use_cost():
     #     1    0

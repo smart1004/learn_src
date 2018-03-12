@@ -24,10 +24,10 @@ def save_model():
 
     for i in range(10):
         sess.run(train, feed_dict={x: xx})
-        saver.save(sess=sess, save_path='model/second',
-                   global_step=i)
+        # saver.save(sess=sess, save_path='model/second',
+        #            global_step=i)
 
-    # saver.save(sess=sess, save_path='model/first')
+    saver.save(sess=sess, save_path='model/first')
     sess.close()
 
 
@@ -73,9 +73,9 @@ def restore_model_adv():
     sess.close()
 
 
-# save_model()
+save_model()
 # restore_model()
-restore_model_adv()
+# restore_model_adv()
 
 
 

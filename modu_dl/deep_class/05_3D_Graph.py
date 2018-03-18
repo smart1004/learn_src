@@ -12,15 +12,15 @@ Y = [i[2] for i in data]
 X_1=statm.add_constant(X)
 results=statm.OLS(Y,X_1).fit()
 
-hour_class=pd.DataFrame(X,columns=['study_hours','private_class'])
-hour_class['Score']=pd.Series(Y)
+hour_class = pd.DataFrame(X, columns=['study_hours','private_class'])
+hour_class['Score'] = pd.Series(Y)
 
 model = statfa.ols(formula='Score ~ study_hours + private_class', data=hour_class)
 
 results_formula = model.fit()
 
-a, b = np.meshgrid(np.linspace(hour_class.study_hours.min(),hour_class.study_hours.max(),100),
-                   np.linspace(hour_class.private_class.min(),hour_class.private_class.max(),100))
+a, b = np.meshgrid(np.linspace(hour_class.study_hours.min(),   hour_class.study_hours.max(),100),
+                   np.linspace(hour_class.private_class.min(), hour_class.private_class.max(),100))
 
 X_ax = pd.DataFrame({'study_hours': a.ravel(), 'private_class': b.ravel()})
 fittedY=results_formula.predict(exog=X_ax)

@@ -18,11 +18,13 @@ tf.set_random_seed(seed)
 Data_set = numpy.loadtxt("../dataset/ThoraricSurgery.csv", delimiter=",")
 
 # 환자의 기록과 수술 결과를 X와 Y로 구분하여 저장합니다.
-X = Data_set[:,0:17]
-Y = Data_set[:,17]
+#293, 1, 3.8, 2.8, 0, 0, 0, 0, 0, 0, 12, 0, 0, 0,  1, 0, 62, 0
+#  0  1  2    3    4  6  7  8  9 10  11 12 13 14  15  16 17  18
+X = Data_set[:, 0:17]
+Y = Data_set[:, 17]
 
 # 딥러닝 구조를 결정합니다(모델을 설정하고 실행하는 부분입니다).
-model = Sequential()
+model = Sequential()  # Linear stack of layers.
 model.add(Dense(30, input_dim=17, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 

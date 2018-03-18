@@ -3,11 +3,9 @@ import numpy as np
 import tensorflow as tf
 from sklearn import model_selection
 
-
 def get_iris():
     iris = np.loadtxt('Data/iris_softmax.csv', delimiter=',')
     return model_selection.train_test_split(iris[:, :-3], iris[:, -3:])
-
 
 class Simple:
     def __init__(self, x_train, x_test, y_train, y_test):
@@ -65,7 +63,7 @@ class Simple:
 
 class Ensenble:
     def __init__(self, count, x_train, x_test, y_train, y_test):
-        self.models = [Simple(x_train, x_test, y_train, y_test) for _ in range(count)]
+        self.models = [ Simple(x_train, x_test, y_train, y_test) for _ in range(count) ]
         self.y_test = y_test
 
     def show_accuracy(self):

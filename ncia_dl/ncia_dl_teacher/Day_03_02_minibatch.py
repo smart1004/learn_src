@@ -75,9 +75,4 @@ print('accuracy :', np.mean(equals))
 
 sess.close()
 
-
-
-
-
-
-print('\n\n\n\n\n\n\n\n')
+# print('\n\n\n\n\n\n\n\n')

@@ -1,4 +1,6 @@
 # Day_02_04_stochastic.py
+# @@@@ 추가 학습 필요
+# stochastic 확률(론)적인
 import numpy as np
 import matplotlib.pyplot as plt
 import random
@@ -6,7 +8,6 @@ import random
 
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
-
 
 def gradient_descent(x, y):
     m, n = x.shape              # 100, 3
@@ -20,7 +21,6 @@ def gradient_descent(x, y):
         g = np.dot(x.T, e)      # (3, 1) = (3, 100) x (100, 1)
         w -= lr * g
     return w.reshape(-1)        # (3,)
-
 
 def gradient_descent_stoc(x, y):
     m, n = x.shape              # 100, 3

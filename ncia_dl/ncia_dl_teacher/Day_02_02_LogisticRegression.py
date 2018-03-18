@@ -8,11 +8,13 @@ def logistic_1():
          [2., 3., 3., 5., 7., 2.],
          [1., 2., 5., 5., 5., 5.]]
     y = [0, 0, 0, 1, 1, 1]
+    # print('y : ', y)              # [0, 0, 0, 1, 1, 1]
     y = np.array(y)
+    # print('np.array(y) : ', y)    # [0 0 0 1 1 1]   shape = (1, 6)
 
     w = tf.Variable(tf.random_uniform([1, 3], -1, 1))
-
-    z = tf.matmul(w, x)
+    #  (1, 6) =  (1, 3) * (3, 6)
+    z = tf.matmul(w,       x)
     hypothesis = tf.nn.sigmoid(z)
     # hypothesis = 1 / (1 + tf.exp(-z))
 
@@ -28,6 +30,7 @@ def logistic_1():
         print(i, sess.run(cost))
 
     sess.close()
+# logistic_1()
 
 
 # 문제

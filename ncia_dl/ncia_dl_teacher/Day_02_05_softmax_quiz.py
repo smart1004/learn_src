@@ -82,9 +82,8 @@ def softmax_2():
     # 3시간 공부하고 7번 출석한 경우와
     # 8시간 공부하고 2번 출석한 경우의 학점을 예측해주세요.
     y_hat = sess.run(hypothesis,
-                     {x: [[1., 3., 7.],
-                          [1., 8., 2.]]})
-    print(y_hat) # [[0.3534538  0.4834801  0.1630661 ] [0.379294   0.30478227 0.31592378]]
+                     {x: ????????????????????  })
+    print(y_hat)
 
     y_arg = np.argmax(y_hat, axis=1)
     print(y_arg) # [1 0]
@@ -112,21 +111,21 @@ def softmax_3_1():
     xx = xxy[:3]  # <-- xxy[:, :3]
     y  = xxy[3:]   # <-- xxy[:, 3:]
 
-    print(xx.shape, y.shape) # (3, 8) (3, 8)
+    print(xx.shape, y.shape) #
 
     x = tf.placeholder(tf.float32)
-    w = tf.Variable(tf.zeros([3, 3]))
+    w = tf.Variable(tf.zeros([????????? ]))
 
-    # (3, 8) =   (3, 3) x (3, 8)
+    #
     z = tf.matmul(w,       x)
 
-    # (3, 8)
+    #
     hypothesis = tf.nn.softmax(z, axis=0)
 
-    # (3, 8) = (3, 8) * (3, 8)
+    #
     cross_entropy = y * -tf.log(hypothesis)
 
-    # (8,) = sum(3, 8)
+    #
     cost_i = tf.reduce_sum(cross_entropy, axis=0)
     # cost_i = tf.nn.softmax_cross_entropy_with_logits(logits=z, labels=y)
 

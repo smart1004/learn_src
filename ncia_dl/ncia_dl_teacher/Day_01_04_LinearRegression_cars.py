@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 
 
 def loadtxt():
-    cars = np.loadtxt('Data/cars.csv', delimiter=',')
-    print(type(cars))
-    print(cars.shape, cars.dtype)
-    print(cars)
+    # cars = np.loadtxt('Data/cars.csv', delimiter=',')
+    # print(type(cars))
+    # print(cars.shape, cars.dtype)
+    # print(cars)
 
     cars = np.loadtxt('Data/cars.csv', delimiter=',',
                       unpack=True, dtype=np.float32)
@@ -30,7 +30,7 @@ cars = np.loadtxt('Data/cars.csv', delimiter=',',
                   dtype=np.float32)
 
 xx = cars[:, 0]
-y = cars[:, 1]
+y  = cars[:, 1]
 
 x = tf.placeholder(tf.float32)
 
@@ -50,15 +50,17 @@ for i in range(10):
     sess.run(train, feed_dict={x: xx})
     print(i, sess.run(cost, {x: xx}))
 
+# print('*' * 70) # ****************************
 print(sess.run(hypothesis, {x: [10, 15]}))
-
+# print('*' * 70) # ****************************
 y1 = sess.run(hypothesis, {x: 0})
 y2 = sess.run(hypothesis, {x: 30})
-print(y2, y2[0])
+print(y2, y2[0]) # [86.49603] 86.49603
+# print('-' * 70)
 
 sess.close()
 
 plt.plot(xx, y, 'ro')
-plt.plot([0, 30], [0, y2])
+# plt.plot([0, 30], [0, y2])
 plt.plot([0, 30], [y1, y2])
 plt.show()

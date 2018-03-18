@@ -54,9 +54,9 @@ def get_iris_3():
 x_train, x_test, y_train, y_test = get_iris_3()
 
 x = tf.placeholder(tf.float32)
-w = tf.Variable(tf.zeros([5, 3]))
+w = tf.Variable(tf.zeros([?, ?]))
 
-# (120, 3) = (120, 5) x (5, 3)
+# (120, 3) = (120, 5) x (?, ?)
 z = tf.matmul(x, w)
 hypothesis = tf.nn.softmax(z)
 

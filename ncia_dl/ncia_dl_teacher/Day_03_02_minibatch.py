@@ -12,6 +12,7 @@ x = tf.placeholder(tf.float32)
 y = tf.placeholder(tf.float32)
 w = tf.Variable(tf.zeros([5, 3]))
 
+# (120, 3) = (120, 5) x (5, 3)
 z = tf.matmul(x, w)
 hypothesis = tf.nn.softmax(z)
 

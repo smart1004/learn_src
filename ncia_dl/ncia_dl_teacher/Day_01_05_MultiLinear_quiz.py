@@ -37,12 +37,13 @@ def multi_2():
          [0., 2., 0., 4., 0.]]
     y = [1, 2, 3, 4, 5]
 
-    w = tf.Variable(tf.random_uniform([1, 2], -1, 1))
+    #
+    w = tf.Variable(tf.random_uniform([?, ?], -1, 1))
     b = tf.Variable(tf.random_uniform([1], -1, 1))
 
     # hypothesis = w[0] * x[0] + w[1] * x[1] + b
 
-    # (1, 5) = (1, 2) x (2, 5)
+    # (1, 5) = (?, ?) x (2, 5)
     hypothesis = tf.matmul(w, x) + b
     cost = tf.reduce_mean((hypothesis - y) ** 2)
 
@@ -78,12 +79,12 @@ def multi_3():
          [0., 2., 0., 4., 0.]]
     y = [1, 2, 3, 4, 5]
 
-    w = tf.Variable(tf.random_uniform([1, 3], -1, 1))
+    w = tf.Variable(tf.random_uniform([?, ?], -1, 1))
 
     # hypothesis = w[0] * x[0] + w[1] * x[1] + w[2] * x[?]
     # hypothesis = w[0] * x[0] + w[1] * x[1] +  b   * x[?]
 
-    # (1, 5) = (1, 3) x (3, 5)
+    # (1, 5) = (?, ?) x (3, 5)
     hypothesis = tf.matmul(w, x)
     cost = tf.reduce_mean((hypothesis - y) ** 2)
 
@@ -148,10 +149,10 @@ def multi_5():
           [1., 3., 0.],
           [1., 0., 4.],
           [1., 5., 0.]]
-    y = [[1], [2], [3], [4], [5]]
+    y = [[1], [2], [3], [4], [5]]  # (5, 1)
 
     x = tf.placeholder(tf.float32)
-    w = tf.Variable(tf.random_uniform([3, 1], -1, 1))
+    w = tf.Variable(tf.random_uniform([?, ?], -1, 1))
 
     # (5, 1) = (5, 3) x (3, 1)
     hypothesis = tf.matmul(x, w)

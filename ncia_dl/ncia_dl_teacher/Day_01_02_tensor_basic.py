@@ -1,14 +1,13 @@
 # Day_01_02_tensor_basic.py
 import tensorflow as tf
 
-
 def basic_1():
     a = tf.constant(3)
     b = tf.Variable(5)
     add = tf.add(a, b)
-    print(a)
-    print(b)
-    print(add)
+    # print(a)   # Tensor("Const:0", shape=(), dtype=int32)
+    # print(b)   # <tf.Variable 'Variable:0' shape=() dtype=int32_ref>
+    # print(add) # Tensor("Add:0", shape=(), dtype=int32)
 
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
@@ -18,9 +17,9 @@ def basic_1():
     print(sess.run(a))
     print(sess.run(b))
     print(sess.run(add))
-
     sess.close()
 
+# basic_1()
 
 def basic_2():
     # 문제
@@ -28,7 +27,7 @@ def basic_2():
     aa = tf.placeholder(tf.int32)
     b = tf.placeholder(tf.int32)
     add = aa + b
-    print(add)
+    # print(add)
 
     sess = tf.InteractiveSession()
     sess.run(tf.global_variables_initializer())
@@ -38,29 +37,27 @@ def basic_2():
 
     sess.close()
 
-
 # 문제
 # 구구단의 특정 단을 출력하는 함수를 placeholder 버전으로 구현하세요.
 def nine_nine(dan):
     left = tf.placeholder(tf.int32)
-    rite = tf.placeholder(tf.int32)
-    multiply = tf.multiply(left, rite)
+    right = tf.placeholder(tf.int32)
+    multiply = tf.multiply(left, right)
 
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
     for i in range(1, 10):
         # print('{} x {} = {:2}'.format(dan, i, dan*i))
-
-        result = sess.run(multiply, {left: dan, rite: i})
+        result = sess.run(multiply, {left: dan, right: i})
         print('{} x {} = {:2}'.format(dan, i, result))
 
     sess.close()
 
 
 def nine_nine_adv(dan):
-    rite = tf.placeholder(tf.int32)
-    multiply = tf.multiply(dan, rite)
+    right = tf.placeholder(tf.int32)
+    multiply = tf.multiply(dan, right)
 
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
@@ -68,11 +65,10 @@ def nine_nine_adv(dan):
     for i in range(1, 10):
         # print('{} x {} = {:2}'.format(dan, i, dan*i))
 
-        result = sess.run(multiply, {rite: i})
+        result = sess.run(multiply, {right: i})
         print('{} x {} = {:2}'.format(dan, i, result))
 
     sess.close()
-
 
 # nine_nine(7)
 nine_nine_adv(7)

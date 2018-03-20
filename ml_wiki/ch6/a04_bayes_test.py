@@ -1,4 +1,4 @@
-from bayes import BayesianFilter
+from a04_bayes import BayesianFilter
 bf = BayesianFilter()
 # 텍스트 학습
 bf.fit("파격 세일 - 오늘까지만 30% 할인", "광고")

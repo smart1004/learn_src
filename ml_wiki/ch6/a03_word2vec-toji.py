@@ -1,8 +1,12 @@
 import codecs
 from bs4 import BeautifulSoup
 from konlpy.tag import Twitter
+from gensim.models import word2vec
+
 # utf-16 인코딩으로 파일을 열고 글자를 출력하기 --- (※1)
-fp = codecs.open("BEXX0003.txt", "r", encoding="utf-16")
+file_id ="C:/home2/ml_wiki/ch6/BEXX0003.txt"
+fp = codecs.open(file_id, "r", encoding="utf-16")
+# fp = codecs.open("BEXX0003.txt", "r", encoding="utf-16")
 soup = BeautifulSoup(fp, "html.parser")
 body = soup.select_one("body > text")
 text = body.getText()
@@ -16,7 +20,7 @@ for line in lines:
     malist = twitter.pos(line, norm=True, stem=True)
     r = []
     for word in malist:
-        # 어미/조사/구두점 등은 대상에서 제외 
+        # 어미/조사/구두점 등은 대상에서 제외
         if not word[1] in ["Josa", "Eomi", "Punctuation"]:
             r.append(word[0])
     rl = (" ".join(r)).strip()
@@ -28,7 +32,8 @@ with open(wakati_file, 'w', encoding='utf-8') as fp:
     fp.write("\n".join(results))
 # Word2Vec 모델 만들기 --- (※5)
 data = word2vec.LineSentence(wakati_file)
-model = word2vec.Word2Vec(data, 
+model = word2vec.Word2Vec(data,
     size=200, window=10, hs=1, min_count=2, sg=1)
 model.save("toji.model")
 print("ok")
+

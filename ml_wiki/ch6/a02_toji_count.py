@@ -2,8 +2,10 @@ import codecs
 from bs4 import BeautifulSoup
 from konlpy.tag import Twitter
 # utf-16 인코딩으로 파일을 열고 글자를 출력하기 --- (※1)
-fp = codecs.open("BEXX0003.txt", "r", encoding="utf-16")
+file_id ="C:/home2/ml_wiki/ch6/BEXX0003.txt"
+fp = codecs.open(file_id, "r", encoding="utf-16")
 soup = BeautifulSoup(fp, "html.parser")
+#input file이 xml형태이고 <body> <text>
 body = soup.select_one("body > text")
 text = body.getText()
 # 텍스트를 한 줄씩 처리하기 --- (※2)

@@ -13,6 +13,7 @@ numpy.random.seed(seed)
 tf.set_random_seed(seed)
 
 # 데이터 입력
+# df_pre = pd.read_csv('../dataset/wine.csv', header=None)
 df_pre = pd.read_csv('../dataset/wine.csv', header=None)
 df = df_pre.sample(frac=1)
 

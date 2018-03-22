@@ -205,3 +205,4 @@ tf_3min/10 - RNN/ChatBot/logs/events.out.tfevents.1512710234.AL01286619.local
 /deep_learning_from_scratch/dataset/mnist.pkl
 /*.wakati
 /*.model
+/ml_wiki/ch6/wiki.txt

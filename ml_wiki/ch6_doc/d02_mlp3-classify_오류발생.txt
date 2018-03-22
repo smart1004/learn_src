@@ -1,0 +1,30 @@
+(tf2) C:\home2>"C:/Program Files/Anaconda3_4_2/envs/tf2/python.exe" c:/home2/ml_wiki/ch6/d02_mlp3-classify.py
+C:\Program Files\Anaconda3_4_2\envs\tf2\lib\site-packages\h5py\__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Using Theano backend.
+WARNING (theano.configdefaults): g++ not available, if using conda: `conda install m2w64-toolchain`
+C:\Program Files\Anaconda3_4_2\envs\tf2\lib\site-packages\theano\configdefaults.py:560: UserWarning: DeprecationWarning: there is no c++ compiler.This is deprecated and with Theano 0.11 a c++ compiler will be mandatory
+  warnings.warn("DeprecationWarning: there is no c++ compiler."
+WARNING (theano.configdefaults): g++ not detected ! Theano will be unable to execute optimized C-implementations (for both CPU and GPU) and will default to Python implementations. Performance will be severely degraded. To remove this warning, set Theano flags cxx to an empty string.
+WARNING (theano.configdefaults): install mkl with `conda install mkl-service`: No module named 'mkl'
+WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+99 99
+
+--------------      d02_mlp3-classify
+You can find the C code in this temporary file: C:\Users\ADMINI~1\AppData\Local\Temp\theano_compilation_error_4y68kwr3
+Traceback (most recent call last):
+  File "C:\Program Files\Anaconda3_4_2\envs\tf2\lib\site-packages\theano\gof\lazylinker_c.py", line 75, in <module>
+    raise ImportError()
+ImportError
+
+>>> 위와 같은 에러가 발생
+conda install libpython 
+https://github.com/Theano/Theano/issues/6532
+
+
+>>> AttributeError: 'list' object has no attribute 'ndim'
+
+# conda install scipy #이미 설치됨
+conda update scipy
+https://stackoverflow.com/questions/48493755/keras-attributeerror-list-object-has-no-attribute-ndim
+

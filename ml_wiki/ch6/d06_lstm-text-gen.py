@@ -7,7 +7,7 @@ from keras.optimizers import RMSprop
 from keras.utils.data_utils import get_file
 import numpy as np
 import random, sys
-fp = codecs.open("./BEXX0003.txt", "r", encoding="utf-16")
+fp = codecs.open("C:/home2/ml_wiki/ch6/BEXX0003.txt", "r", encoding="utf-16")
 soup = BeautifulSoup(fp, "html.parser")
 body = soup.select_one("body")
 text = body.getText() + " "
@@ -54,7 +54,7 @@ for iteration in range(1, 60):
     print()
     print('-' * 50)
     print('반복 =', iteration)
-    model.fit(X, y, batch_size=128, nb_epoch=1) # 
+    model.fit(X, y, batch_size=128, nb_epoch=1) #
     # 임의의 시작 텍스트 선택하기
     start_index = random.randint(0, len(text) - maxlen - 1)
     # 다양한 다양성의 문장 생성

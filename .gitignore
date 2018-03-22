@@ -203,3 +203,8 @@ tf_3min/12 - DQN/logs/events.out.tfevents.1497009719.mpr
 tf_3min/05 - TensorBoard, Saver/data.csv
 tf_3min/10 - RNN/ChatBot/logs/events.out.tfevents.1512710234.AL01286619.local
 /deep_learning_from_scratch/dataset/mnist.pkl
+/*.wakati
+/*.model
+/ml_wiki/ch6/wiki.txt
+/ml_wiki/ch6/newstext/wakati/*.wakati
+/ml_wiki/ch6/wiki.model

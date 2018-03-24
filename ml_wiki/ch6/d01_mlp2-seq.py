@@ -33,6 +33,7 @@ def register_dic():
     files = glob.glob(root_dir+"/wakati/*.wakati", recursive=True)
     for i in files:
         file_to_ids(i)
+
 # 파일 내부의 단어 세기 --- (※4)
 def count_file_freq(fname):
     cnt = []
@@ -69,6 +70,7 @@ def count_freq(limit = 0):
                 if i > limit: break
                 i += 1
     return X,Y
+
 # 단어 딕셔너리 만들기 --- (※5)
 if os.path.exists(dic_file):
     word_dic = json.load(open(dic_file))

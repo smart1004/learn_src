@@ -71,18 +71,18 @@ class Ensenble:
         for m in self.models:
             m.show_accuracy()
             total += m.pred
-        print('-' * 50)
 
         pred_arg = np.argmax(total, axis=1)
         test_arg = np.argmax(self.y_test, axis=1)
 
         equals = (pred_arg == test_arg)
+        print('-' * 50)
         print('accuracy :', np.mean(equals))
-
 
 x_train, x_test, y_train, y_test = get_iris()
 
 simple = Simple(x_train, x_test, y_train, y_test)
+print('simple.show_accuracy()')
 simple.show_accuracy()
 print('-' * 50)
 

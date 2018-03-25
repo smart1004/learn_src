@@ -208,8 +208,13 @@ tf_3min/10 - RNN/ChatBot/logs/events.out.tfevents.1512710234.AL01286619.local
 /ml_wiki/ch6/wiki.txt
 /ml_wiki/ch6/newstext/wakati/*.wakati
 /ml_wiki/ch6/wiki.model
+<<<<<<< HEAD
 /ml_wiki/ch6/newstext/data-mini.json
 /ml_wiki/ch6/newstext/word-dic.json
 /ml_wiki/ch6/newstext/data.json
 /model_inquiry.h5
 /model_inquiry.json
+=======
+/lstm_tensorflow/word-rnn-tensorflow/data/tinyshakespeare/*.pkl
+/lstm_tensorflow/word-rnn-tensorflow/data/tinyshakespeare/data.npy
+>>>>>>> acd7b9607a1ac54dc0d9026739c23f4cc8b611a9

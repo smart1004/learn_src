@@ -7,7 +7,9 @@ import datetime as dt
 
 """To run this code, you'll need to first download and extract the text dataset
     from here: http://www.fit.vutbr.cz/~imikolov/rnnlm/simple-examples.tgz. Change the
-    data_path variable below to your local exraction path"""
+    data_path variable below to your local exraction path
+## 참고 : http://adventuresinmachinelearning.com/keras-lstm-tutorial/    
+"""
 #D:\home\lstm_tensorflow\adventures-in-ml-code-master\simple-examples\data
 # data_path = "C:\\Users\Andy\Documents\simple-examples\data"
 
@@ -24,28 +26,26 @@ def read_words(filename):
         xx = ct.replace("\n", "<eos>").split()
     return  xx
     ''' 
-    with tf.gfile.GFile(filename, "r") as f:
-        xx = f.read().decode("utf-8").replace("\n", "<eos>").split()
-        print('xx', xx)
-        return  xx '''
-
-
+    with tf.gfile.GFile(filename, "r") as f:  
+        return f.read().decode("utf-8").replace("\n", "<eos>").split()'''
 
 def build_vocab(filename):
     data = read_words(filename)
 
     counter = collections.Counter(data)
     count_pairs = sorted(counter.items(), key=lambda x: (-x[1], x[0]))
+    # ('the', 50770), ('<unk>', 45020), ('<eos>', 42068), ('N', 32481), ('of', 24400)
 
-    words, _ = list(zip(*count_pairs))
-    word_to_id = dict(zip(words, range(len(words))))
-
+    words, _ = list(zip(*count_pairs)) #('the', '<unk>', '<eos>', 'N', 'of', 'to', 'a', 'in', 'and', "'s", 'that', 'for', '$', 'is', ...)
+    word_to_id = dict(zip(words, range(len(words)))) 
+    # {'#': 686, '$': 12, '&': 82, "'": 134, "'80s": 7232, "'d": 1129, "'ll": 921, "'m": 826,
     return word_to_id
 
 
-def file_to_word_ids(filename, word_to_id):
+def file_to_word_ids(filename, word_to_id):  # word_to_id-> {'#': 686, '$': 12, '&': 82, "'": 134, "'80s": 7232, ...}
     data = read_words(filename)
-    return [word_to_id[word] for word in data if word in word_to_id]
+    xx = [word_to_id[word] for word in data if word in word_to_id]
+    return xx
 
 
 def load_data():  
@@ -61,7 +61,7 @@ def load_data():
     word_to_id = build_vocab(train_path)
     train_data = file_to_word_ids(train_path, word_to_id)
     valid_data = file_to_word_ids(valid_path, word_to_id)
-    test_data = file_to_word_ids(test_path, word_to_id)
+    test_data  = file_to_word_ids(test_path , word_to_id)
     vocabulary = len(word_to_id)
     reversed_dictionary = dict(zip(word_to_id.values(), word_to_id.keys()))
 

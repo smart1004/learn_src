@@ -11,7 +11,7 @@ import datetime as dt
 #D:\home\lstm_tensorflow\adventures-in-ml-code-master\simple-examples\data
 # data_path = "C:\\Users\Andy\Documents\simple-examples\data"
 
-data_path = "D:/home/lstm_tensorflow/adventures-in-ml-code-master/simple-examples/data"
+data_path = "D://home/lstm_tensorflow/adventures-in-ml-code-master/simple-examples/data"
 run_opt = 1
 parser = argparse.ArgumentParser()
 parser.add_argument('--run_opt',   type=int, default=run_opt,   help='An integer: 1 to train, 2 to test')
@@ -19,10 +19,16 @@ parser.add_argument('--data_path', type=str, default=data_path, help='The full p
 args = parser.parse_args()
 
 def read_words(filename):
+    with tf.gfile.GFile(filename, "rb") as f:     
+        ct = f.read().decode("utf-8")
+        xx = ct.replace("\n", "<eos>").split()
+    return  xx
+    ''' 
     with tf.gfile.GFile(filename, "r") as f:
         xx = f.read().decode("utf-8").replace("\n", "<eos>").split()
         print('xx', xx)
-        return  xx
+        return  xx '''
+
 
 
 def build_vocab(filename):
@@ -49,7 +55,7 @@ def load_data():
     # valid_path = os.path.join(data_path, "ptb.valid.txt")
     valid_path = data_path + "/ptb.valid.txt" 
     # test_path = os.path.join(data_path, "ptb.test.txt")
-    test_path  = data_path + "/ptb.testtxt" 
+    test_path  = data_path + "/ptb.test.txt" 
 
     # build the complete vocabulary, then convert text data to list of integers
     word_to_id = build_vocab(train_path)

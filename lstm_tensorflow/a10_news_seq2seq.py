@@ -13,7 +13,7 @@ word_to_ix, ix_to_word = tool.make_dict_all_cut(title+contents, minlength=0, max
 # parameters
 multi = True
 forward_only = False
-hidden_size = 300
+hidden_size = 300 
 vocab_size = len(ix_to_word)
 num_layers = 3
 learning_rate = 0.001

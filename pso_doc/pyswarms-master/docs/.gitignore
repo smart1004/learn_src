@@ -1,0 +1,6 @@
+/pyswarms.rst
+/pyswarms.*.rst
+/modules.rst
+/examples/.ipynb_checkpoints/*.ipynb
+.editorconfig
+.vscode

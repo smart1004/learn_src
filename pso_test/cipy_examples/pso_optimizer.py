@@ -29,6 +29,7 @@ def main(dimension, iterations):
 
 
 if __name__ == "__main__":
-    solution, optimizer = main(30, 1000)
+    # solution, optimizer = main(30, 1000)
+    solution, optimizer = main(2, 1000)
     print(solution)
     print(optimizer.accuracy())

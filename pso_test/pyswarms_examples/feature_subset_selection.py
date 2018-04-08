@@ -1,5 +1,5 @@
-
 # coding: utf-8
+# 에러를 다 고쳤다
 
 # # Feature Subset Selection
 # In this example, we'll be using the optimizer `pyswarms.discrete.BinaryPSO` to perform feature subset selection to improve classifier performance. But before we jump right on to the coding, let's first explain some relevant concepts:
@@ -54,9 +54,9 @@ import pyswarms as ps
 
 # Some more magic so that the notebook will reload external python modules;
 # see http://stackoverflow.com/questions/1907993/autoreload-of-modules-in-ipython
-get_ipython().run_line_magic('load_ext', 'autoreload')
-get_ipython().run_line_magic('autoreload', '2')
-get_ipython().run_line_magic('matplotlib', 'inline')
+# get_ipython().run_line_magic('load_ext', 'autoreload')
+# get_ipython().run_line_magic('autoreload', '2')
+# get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 # ### Generating a toy dataset using scikit-learn
@@ -156,9 +156,12 @@ def f(x, alpha=0.88):
 
 
 # ## Using Binary PSO
-# With everything set-up, we can now use Binary PSO to perform feature selection. For now, we'll be doing a global-best solution by setting the number of neighbors equal to the number of particles. The hyperparameters are also set arbitrarily. Moreso, we'll also be setting the distance metric as 2 (truth is, it's not really relevant because each particle will see one another).
-
-# In[51]:
+# With everything set-up, we can now use Binary PSO to perform feature selection. 
+# For now, we'll be doing a global-best solution by setting the number 
+# of neighbors equal to the number of particles. 
+# The hyperparameters are also set arbitrarily. 
+# Moreso, we'll also be setting the distance metric as 2 
+# (truth is, it's not really relevant because each particle will see one another).
 
 
 # Initialize swarm, arbitrary
@@ -166,14 +169,15 @@ options = {'c1': 0.5, 'c2': 0.5, 'w':0.9, 'k': 30, 'p':2}
 
 # Call instance of PSO
 dimensions = 15 # dimensions should be the number of features
-optimizer.reset()
+# optimizer.reset()
 optimizer = ps.discrete.BinaryPSO(n_particles=30, dimensions=dimensions, options=options)
 
 # Perform optimization
 cost, pos = optimizer.optimize(f, print_step=100, iters=1000, verbose=2)
 
 
-# We can then train the classifier using the positions found by running another instance of logistic regression. We can compare the performance when we're using the full set of features
+# We can then train the classifier using the positions found by running another instance of logistic regression. 
+# We can compare the performance when we're using the full set of features
 
 # In[54]:
 
@@ -185,7 +189,7 @@ classfier = linear_model.LogisticRegression()
 X_selected_features = X[:,pos==1]  # subset
 
 # Perform classification and store performance in P
-classifier.fit(X_selected_features, y)
+c1 = classifier.fit(X_selected_features, y)
 
 # Compute performance
 subset_performance = (c1.predict(X_selected_features) == y).mean()
@@ -194,7 +198,10 @@ subset_performance = (c1.predict(X_selected_features) == y).mean()
 print('Subset performance: %.3f' % (subset_performance))
 
 
-# Another important advantage that we have is that we were able to reduce the features (or do dimensionality reduction) on our data. This can save us from the [curse of dimensionality](http://www.stat.ucla.edu/~sabatti/statarray/textr/node5.html), and may in fact speed up our classification.
+# Another important advantage that we have is that we were able to reduce the features 
+# (or do dimensionality reduction) on our data. 
+# This can save us from the [curse of dimensionality](http://www.stat.ucla.edu/~sabatti/statarray/textr/node5.html), 
+# and may in fact speed up our classification.
 # 
 # Let's plot the feature subset that we have:
 

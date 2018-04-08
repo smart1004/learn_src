@@ -1,17 +1,18 @@
+# Travelling Salesperson Problem Example 1
 # http://mnemstudio.org/particle-swarm-tsp-example-1.htm
 import win_unicode_console; win_unicode_console.enable()
 import random
 import math
 import sys
 
-PARTICLE_COUNT = 10;
-V_MAX = 4; # Maximum velocity change allowed.  Range: 0 >= V_MAX < CITY_COUNT
+PARTICLE_COUNT = 10
+V_MAX = 4 # Maximum velocity change allowed.  Range: 0 >= V_MAX < CITY_COUNT
 
 MAX_EPOCHS = 10000
 
 particles = []
 
-map = [];
+map = []
 CITY_COUNT = 8
 TARGET = 86.63 # Number for algorithm to find.
 XLocs = [30, 40, 40, 29, 19, 9, 9, 20]

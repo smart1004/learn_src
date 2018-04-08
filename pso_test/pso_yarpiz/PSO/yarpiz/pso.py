@@ -74,6 +74,6 @@ def PSO(problem, MaxIter = 100, PopSize = 100, c1 = 1.4962, c2 = 1.4962, w = 0.7
                     gbest['cost'] = pop[i]['best_cost'];
 
         w *= wdamp;
-        print('Iteration {}: Best Cost = {}'.format(it, gbest['cost']));
+        # print('Iteration {}: Best Cost = {}'.format(it, gbest['cost']));   #kusung
 
     return gbest, pop;

@@ -48,3 +48,4 @@ print('fopt', fopt)
 #     yield stress    = 100 kpsi (binding constraint)
 #     buckling stress = 150 kpsi
 #     deflection      = 0.2 in
+
